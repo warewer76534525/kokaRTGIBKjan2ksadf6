@@ -7,7 +7,7 @@
   <property name="dist.win-x86-32.dir" location="${installer.dir}/bin-win-x86-32/" />
   <property name="lib.dir" location="ResourceProject"/>
   
-  <target name="build.chatdownloader" depends="build.message">
+  <target name="build.chatdownloader" >
 	<ant dir="chatdownloader" target="package.platform" inheritAll="true"/>
   </target>
   

@@ -1,2 +1,5 @@
 
 /src/chatdownloader/bin
+/installer/bin-linux-x86-64
+/installer/bin
+/installer/bin-linux-x86-32

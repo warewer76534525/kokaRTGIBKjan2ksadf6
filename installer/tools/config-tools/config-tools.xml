@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:si="http://www.springframework.org/schema/integration"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd  
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd  ">
+
+	<context:annotation-config />
+	<context:property-placeholder location="application.properties" />
+	
+	<bean class="com.ocbcmcd.config.service.PropertyService">
+		<constructor-arg name="parentLocation" value="${bin.dir}" />
+		<constructor-arg name="servicesName">
+			<array>
+				<value>sapfilewatcher-service</value>
+				<value>mailsender-service</value>
+				<value>confirmwatcher-service</value>
+				<value>ftpfilesender-service</value>
+				<value>housekeeping-service</value>
+				<value>ocbcmcdmonitoring/WEB-INF/classes</value>
+			</array>
+		</constructor-arg>
+		<constructor-arg name="configName" value="application.properties"/>
+		<constructor-arg name="masterConfigLocation" value="${master.config.file}"/>
+	</bean>
+	
+	<bean class="com.ocbcmcd.config.service.EncryptorService">
+		<constructor-arg name="parentLocation" value="${bin.dir}" />
+		<constructor-arg name="servicesName">
+			<array>
+				<value>sapfilewatcher-service</value>
+				<value>mailsender-service</value>
+				<value>confirmwatcher-service</value>
+				<value>ftpfilesender-service</value>
+				<value>housekeeping-service</value>
+				<value>ocbcmcdmonitoring/WEB-INF/classes</value>
+			</array>
+		</constructor-arg>
+		<constructor-arg name="configName" value="application.properties"/>
+		<constructor-arg name="encryptedKeyList">
+			<array>
+				<value>ftp.host</value>
+				<value>ftp.username</value>
+				<value>ftp.password</value>
+				<value>mail.host</value>
+				<value>mail.port</value>
+				<value>mail.username</value>
+				<value>mail.password</value>
+				<value>mail.from</value>
+				<value>mail.to</value>
+				<value>jdbc.url</value>
+				<value>jdbc.username</value>
+				<value>jdbc.password</value>
+			</array>
+		</constructor-arg>
+	</bean>
+</beans>

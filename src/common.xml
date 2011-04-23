@@ -2,7 +2,6 @@
 
 <project>
 	<property name="external.lib.dir" location="../../external-lib" />
-	<property name="internal.lib.dir" location="../../internal-lib" />
 	<property name="dist.dir" location="." />
 
 	<property name="dist.linux-x86-32.dir" location="${dist.dir}/linux-x86-32/" />
@@ -21,9 +20,6 @@
 	
 	<path id="master-classpath">
 		<fileset dir="${external.lib.dir}">
-			<include name="*.jar" />
-		</fileset>
-		<fileset dir="${internal.lib.dir}">
 			<include name="*.jar" />
 		</fileset>
 		<pathelement path="${build.dir}" />
@@ -98,9 +94,6 @@
 	<target name="copy-service-libs" depends="copy-service-tools">
 		<copy todir="${service.lib.dir}">
 			<fileset dir="${external.lib.dir}">
-				<include name="*.jar" />
-			</fileset>
-			<fileset dir="${internal.lib.dir}">
 				<include name="*.jar" />
 			</fileset>
 		</copy>
