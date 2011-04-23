@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+
+<project>
+	<property name="external.lib.dir" location="../../external-lib" />
+	<property name="internal.lib.dir" location="../../internal-lib" />
+	<property name="dist.dir" location="." />
+
+	<property name="dist.linux-x86-32.dir" location="${dist.dir}/linux-x86-32/" />
+	<property name="dist.linux-x86-64.dir" location="${dist.dir}/linux-x86-64/" />
+	<property name="dist.win-x86-32.dir" location="${dist.dir}/win-x86-32/" />
+	
+	<property name="build.dir" location="bin" />
+	<property name="lib.dir" location="../com.ocbcmcd.message" />
+	<property name="src.dir" location="src" />
+	<property name="wrapper.dir" location="wrapper" />
+	<property name="wrapper.log.dir" location="log" />
+	<property name="wrapper.conf.dir" location="conf" />
+	<property name="tools.dir" location="../../tools" />
+	<property name="winrun4j.dir" location="${tools.dir}/winrun4j" />
+	<property name="jsw.dir" location="${tools.dir}/jsw" />
+	
+	<path id="master-classpath">
+		<fileset dir="${external.lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${internal.lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${build.dir}" />
+	</path>
+	
+	<pathconvert property="manifest.classpath" pathsep=" ">
+		<path refid="master-classpath"/>
+		<mapper>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*.jar" to="libs/*.jar"/>
+			</chainedmapper>
+		</mapper>
+	</pathconvert>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />	
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<target name="compile" depends="init" description="Compile main source tree java files">
+		<mkdir dir="${build.dir}" />
+		<javac destdir="${build.dir}" source="1.6" target="1.6" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}" />
+			<classpath refid="master-classpath" />
+		</javac>
+	</target>
+
+	<target name="clean-service">
+		<delete dir="${service.dir}" />
+		<delete dir="${linux-x86-32.dir}" />
+		<delete dir="${linux-x86-64.dir}" />
+	</target>
+
+	<target name="init-service" depends="clean-service">
+		<mkdir dir="${service.dir}" />
+		<mkdir dir="${service.lib.dir}" />
+		<mkdir dir="${service.dir}/bin" />
+		<mkdir dir="${service.dir}/conf" />
+		<mkdir dir="${service.dir}/logs" />
+	</target>
+
+	<target name="copy-service-config" depends="init-service">
+		<copy todir="${service.dir}">
+			<!--
+			<fileset dir="${src.dir}">
+				<include name="*.ini" />
+			</fileset>
+			-->
+			<fileset dir="${src.dir}">
+				<include name="*.xml" />
+				<include name="*.properties" />
+				<include name="*.vm" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="copy-service-tools" depends="copy-service-config">
+		<!--
+		<copy todir="${service.dir}">
+			<fileset dir="${winrun4j.dir}">
+				<include name="*.exe" />
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		-->
+	</target>
+
+	<target name="copy-service-libs" depends="copy-service-tools">
+		<copy todir="${service.lib.dir}">
+			<fileset dir="${external.lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${internal.lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="copy-wrapper">
+		<copy todir="${service.lib.dir}">
+			<fileset dir="${jsw.dir}" >
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${service.dir}/bin">
+			<fileset dir="${wrapper.dir}/bin">
+			</fileset>
+		</copy>
+		<copy todir="${service.dir}/conf">
+			<fileset dir="${wrapper.dir}/conf">
+				<include name="*.conf" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package" depends="compile, copy-service-libs, copy-wrapper" description="Package service project">
+		<jar destfile="${service.dir}/${service.name}.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main.class}"/>
+				<attribute name="Class-Path" value=". ${manifest.classpath}"/>
+        </manifest>
+		</jar>
+	</target>
+	
+	<target name="package-linux-x86-32" description="Package linux-x86-32">
+		<copy todir="${linux-x86-32.dir}">
+			<fileset dir="${service.dir}" />
+		</copy>
+		<copy todir="${linux-x86-32.dir}/bin">
+			<fileset dir="${jsw.dir}/linux-x86-32" />
+		</copy>
+	</target>
+	
+	<target name="package-linux-x86-64" description="Package linux-x86-64">
+		<copy todir="${linux-x86-64.dir}">
+			<fileset dir="${service.dir}" />
+		</copy>
+		<copy todir="${linux-x86-64.dir}/bin">
+			<fileset dir="${jsw.dir}/linux-x86-64" />
+		</copy>
+	</target>
+	
+	<target name="package-win-x86-32" description="Package win-x86-32">
+		<copy todir="${win-x86-32.dir}">
+			<fileset dir="${service.dir}" />
+		</copy>
+		<copy todir="${win-x86-32.dir}/bin">
+			<fileset dir="${jsw.dir}/win-x86-32" />
+		</copy>
+	</target>
+	
+	<target name="package.platform" depends="package, package-linux-x86-32, package-linux-x86-64, package-win-x86-32" description="Package services platform project" />
+	 
+</project>
+
