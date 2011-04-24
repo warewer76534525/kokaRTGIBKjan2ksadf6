@@ -11,7 +11,7 @@
   <property name="chat.app" value="${chat.bin.dir}/app" />
   
   <property name="downloader.bin.dir" value="bin/downloader-service/bin" />
-  <property name="downloader.app" value="${chat.bin.dir}/app" />
+  <property name="downloader.app" value="${downloader.bin.dir}/app" />
   
   <target name="startup" description="start application">
 	<exec executable="bash">
