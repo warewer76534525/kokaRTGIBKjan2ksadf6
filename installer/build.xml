@@ -7,49 +7,72 @@
   <property name="bin.dir" location="bin"/>
   <property name="lib.dir" value="lib" />
   
-  <property name="chatdownloader.bin.dir" value="bin/chatdownloader-service/bin" />
+  <property name="chat.bin.dir" value="bin/chat-service/bin" />
+  <property name="chat.app" value="${chat.bin.dir}/app" />
   
-  <property name="chatdownloader.app" value="${chatdownloader.bin.dir}/app" />
+  <property name="downloader.bin.dir" value="bin/downloader-service/bin" />
+  <property name="downloader.app" value="${chat.bin.dir}/app" />
   
   <target name="startup" description="start application">
 	<exec executable="bash">
-		<arg line="${chatdownloader.app} start"/>
+		<arg line="${chat.app} start"/>
+	</exec>
+	<exec executable="bash">
+		<arg line="${downloader.app} start"/>
 	</exec>
   </target>
   
   <target name="restart" description="restart application">
 	<exec executable="bash">
-		<arg line="${chatdownloader.app} restart"/>
+		<arg line="${chat.app} restart"/>
+	</exec>
+	<exec executable="bash">
+		<arg line="${downloader.app} restart"/>
 	</exec>
   </target>
   
   <target name="shutdown" description="shutdown application">
 	<exec executable="bash">
-		<arg line="${chatdownloader.app} stop"/>
+		<arg line="${chat.app} stop"/>
+	</exec>
+	<exec executable="bash">
+		<arg line="${downloader.app} stop"/>
 	</exec>
   </target>
   
   <!-- Install Win Service -->
   <target name="install.services" description="Install Services">
-	<exec dir="${chatdownloader.bin.dir}" executable="cmd">
+	<exec dir="${chat.bin.dir}" executable="cmd">
+		<arg line="/c InstallService.bat" />
+	</exec>
+	<exec dir="${downloader.bin.dir}" executable="cmd">
 		<arg line="/c InstallService.bat" />
 	</exec>
   </target>
   
 	<target name="uninstall.services" description="Unistall Services">
-		<exec dir="${chatdownloader.bin.dir}" executable="cmd">
+		<exec dir="${chat.bin.dir}" executable="cmd">
+			<arg line="/c UninstallService.bat" />
+		</exec>
+		<exec dir="${downloader.bin.dir}" executable="cmd">
 			<arg line="/c UninstallService.bat" />
 		</exec>
 	</target>
 	
 	<target name="start.services" description="Unistall Services">
-		<exec dir="${chatdownloader.bin.dir}" executable="cmd">
+		<exec dir="${chat.bin.dir}" executable="cmd">
+			<arg line="/c StartService.bat" />
+		</exec>
+		<exec dir="${downloader.bin.dir}" executable="cmd">
 			<arg line="/c StartService.bat" />
 		</exec>
 	</target>
 	
 	<target name="stop.services" description="Unistall Services">
-		<exec dir="${chatdownloader.bin.dir}" executable="cmd">
+		<exec dir="${chat.bin.dir}" executable="cmd">
+			<arg line="/c StopService.bat" />
+		</exec>
+		<exec dir="${downloader.bin.dir}" executable="cmd">
 			<arg line="/c StopService.bat" />
 		</exec>
 	</target>

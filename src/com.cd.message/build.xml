@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<project name="com.cd.message">
+	<property name="build.dir" value="bin" />
+	<property name="lib.dir" value="../../internal-lib" />
+	<property name="ext.lib.dir" value="../../external-lib" />
+	<property name="src.dir" value="src" />
+	
+	<path id="master-classpath">
+		<fileset dir="${ext.lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete file="${lib.dir}/com.cd.message.jar" />
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<target name="compile" description="Compile project dependency" depends="init">
+		<javac destdir="${build.dir}" source="1.6" target="1.6" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}" />
+			<classpath refid="master-classpath" />
+		</javac>
+	</target>
+
+	<target name="package" depends="compile" description="Compile project dependency">
+		<jar destfile="${lib.dir}/com.cd.message.jar" basedir="${build.dir}" includes="**/*.class" />
+	</target>
+</project>

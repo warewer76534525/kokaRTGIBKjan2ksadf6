@@ -1,15 +1,27 @@
 <?xml version="1.0"?>
 <project name="master" default="build.library" basedir=".">
+  <property name="db.dir" location="database"/>
+  <property file="${db.dir}/sql.properties" />
   <property name="installer.dir" location="..\installer"/>
+  <property name="dist.web" location="${installer.dir}\web"/>
   <property name="dist.dir" location="${installer.dir}\bin"/>
   <property name="dist.linux-x86-32.dir" location="${installer.dir}/bin-linux-x86-32/" />
   <property name="dist.linux-x86-64.dir" location="${installer.dir}/bin-linux-x86-64/" />
   <property name="dist.win-x86-32.dir" location="${installer.dir}/bin-win-x86-32/" />
   <property name="lib.dir" location="ResourceProject"/>
   
-  <target name="build.chatdownloader" >
-	<ant dir="chatdownloader" target="package.platform" inheritAll="true"/>
+  <target name="build.message">
+	<ant dir="com.cd.message" target="package" inheritAll="false"/>
   </target>
+  
+  <target name="build.chat" >
+	<ant dir="com.cd.chat" target="package.platform" inheritAll="true"/>
+  </target>
+
+  <target name="build.downloader" >
+	<ant dir="com.cd.downloader" target="package.platform" inheritAll="true"/>
+  </target>
+ 
   
   <target name="clean.dist">
 	<delete dir="${dist.linux-x86-32.dir}"/>
@@ -24,7 +36,7 @@
 	<mkdir dir="${dist.win-x86-32.dir}"/>
   </target>
   
-  <target name="installer" depends="init.dist, build.chatdownloader" >
+  <target name="installer" depends="init.dist, build.message, build.chat, build.downloader" >
 	<delete dir="${dist.dir}"/>
   </target>
   

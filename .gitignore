@@ -3,3 +3,8 @@
 /installer/bin-linux-x86-64
 /installer/bin
 /installer/bin-linux-x86-32
+/src/com.cd.downloader/downloader-service
+/src/com.cd.chat/chat-service
+/src/com.cd.message/bin
+/src/com.cd.downloader/bin
+/src/com.cd.chat/bin
