@@ -3,9 +3,9 @@ package com.cd.downloader.service;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import com.cd.message.DownlodRequest;
+import com.cd.message.DownlodaRequest;
 
 
 public interface IFileDownloader {
-	public void download(DownlodRequest downloadRequest) throws MalformedURLException, IOException;
+	public void download(DownlodaRequest downloadRequest) throws MalformedURLException, IOException;
 }

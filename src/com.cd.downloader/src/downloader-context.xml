@@ -50,5 +50,15 @@
 		<property name="messageConverter" ref="serializableMessageConverter" />
 	</bean>
 	
+	<bean id="downloadErrorDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="${topic.download.error}" />
+	</bean>
+	
+	<bean id="downloadErrorTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="receiveTimeout" value="10000" />
+		<property name="defaultDestination" ref="downloadErrorDestination" />
+		<property name="messageConverter" ref="serializableMessageConverter" />
+	</bean>
 	
 </beans>

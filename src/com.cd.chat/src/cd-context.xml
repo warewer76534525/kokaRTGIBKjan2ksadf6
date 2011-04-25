@@ -51,4 +51,17 @@
 		<property name="clientId" value="downloadCompletedListener"></property>
 	</bean>
 	
+	<bean id="downloadErrorDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="${topic.download.error}" />
+	</bean>
+	
+	<bean
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="downloadErrorDestination" />
+		<property name="messageListener" ref="downloadErrorListener" />
+		<property name="sessionTransacted" value="true" />
+		<property name="subscriptionDurable" value="true" />
+		<property name="clientId" value="downloadErrorListener"></property>
+	</bean>
 </beans>

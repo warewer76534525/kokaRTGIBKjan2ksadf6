@@ -21,6 +21,6 @@
 	<classpathentry kind="lib" path="/external-lib/org.springframework.jms-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/external-lib/org.springframework.test-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/external-lib/org.springframework.transaction-3.0.5.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/internal-lib/com.cd.message.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.cd.message"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

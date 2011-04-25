@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-import com.cd.message.DownlodRequest;
+import com.cd.message.DownlodaRequest;
 
 
 @Service
@@ -25,7 +25,7 @@ public class DownloadPacketListener implements PacketListener {
 		Message msg = (Message) p;
 		
 		if (isDownloadMessage(msg.getBody())) {
-			DownlodRequest downloadRequest = new DownlodRequest(getFrom(msg.getFrom()), getUrl(msg.getBody()));
+			DownlodaRequest downloadRequest = new DownlodaRequest(getFrom(msg.getFrom()), getUrl(msg.getBody()));
 			simpleDownloadTemplate.convertAndSend(downloadRequest);
 		}
 	}

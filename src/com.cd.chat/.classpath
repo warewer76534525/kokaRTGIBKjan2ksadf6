@@ -26,6 +26,6 @@
 	<classpathentry kind="lib" path="/external-lib/smackx-debug.jar"/>
 	<classpathentry kind="lib" path="/external-lib/smackx-jingle.jar"/>
 	<classpathentry kind="lib" path="/external-lib/smackx.jar"/>
-	<classpathentry kind="lib" path="/internal-lib/com.cd.message.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.cd.message"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -6,14 +6,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 
-public class DownlodRequest implements Serializable {
+public class DownlodaRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String from;
 	private String url;
 	private Date time;
 
-	public DownlodRequest(String from, String url) {
+	public DownlodaRequest(String from, String url) {
 		super();
 		this.from = from;
 		this.url = url;

@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cd.downloader.service.IDownloadManager;
-import com.cd.message.DownlodRequest;
+import com.cd.message.DownlodaRequest;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,7 +22,7 @@ public class When_single_download_request_arrive {
 	
 	@Autowired
 	private IDownloadManager _downloadManager;
-	private DownlodRequest _downloadRequest;
+	private DownlodaRequest _downloadRequest;
 	
 	@Value("${downloaded.dir}")
 	private String downloadedDir;
@@ -31,7 +31,7 @@ public class When_single_download_request_arrive {
 	
 	@Before
 	public void setUp() {
-		_downloadRequest = new DownlodRequest("sembiring.adi@gmail.com", URL);
+		_downloadRequest = new DownlodaRequest("sembiring.adi@gmail.com", URL);
 	}
 	
 	@Test

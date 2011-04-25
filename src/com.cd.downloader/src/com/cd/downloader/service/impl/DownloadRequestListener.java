@@ -12,7 +12,7 @@ import org.springframework.jms.support.JmsUtils;
 import org.springframework.stereotype.Service;
 
 import com.cd.downloader.service.IDownloadManager;
-import com.cd.message.DownlodRequest;
+import com.cd.message.DownlodaRequest;
 
 @Service
 public class DownloadRequestListener implements MessageListener {
@@ -26,7 +26,7 @@ public class DownloadRequestListener implements MessageListener {
 		ObjectMessage mapMessage = (ObjectMessage) message;
 		
 		try {
-			DownlodRequest downloadRequest = (DownlodRequest) mapMessage.getObject();
+			DownlodaRequest downloadRequest = (DownlodaRequest) mapMessage.getObject();
 			downloadManager.queueDownloadRequest(downloadRequest);
 		} catch (JMSException e) {
 			throw JmsUtils.convertJmsAccessException(e);
