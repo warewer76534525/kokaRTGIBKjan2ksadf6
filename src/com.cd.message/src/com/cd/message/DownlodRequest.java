@@ -58,7 +58,11 @@ public class DownlodRequest implements Serializable {
 		}
 
 		String fileName = new File(url.getFile()).getName();
-
+		int questionMarkPos = fileName.indexOf('?');
+		
+		if (questionMarkPos > 0) {
+			return fileName.substring(0, questionMarkPos);
+		}
 		return fileName;
 	}
 
