@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.cd.downloader.service.IFileDownloader;
-import com.cd.message.DownlodaRequest;
+import com.cd.message.DownlodRequest;
 
 public class SimpleFileDownloader implements IFileDownloader {
 	
@@ -23,7 +23,7 @@ public class SimpleFileDownloader implements IFileDownloader {
 
 
 	@Override
-	public void download(DownlodaRequest downloadRequest) throws MalformedURLException, IOException {
+	public void download(DownlodRequest downloadRequest) throws MalformedURLException, IOException {
 		URL url = new URL(downloadRequest.getUrl());
 		FileUtils.copyURLToFile(url, new File(_downloadedDir , downloadRequest.getFileName()));
 	}

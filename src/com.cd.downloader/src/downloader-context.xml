@@ -24,18 +24,23 @@
 		<constructor-arg value="${queue.download.request}" />
 	</bean>
 	
-	<bean id="simpleDownloadTemplate" class="org.springframework.jms.core.JmsTemplate">
+	<bean
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="receiveTimeout" value="10000" />
-		<property name="defaultDestination" ref="downloadRequestDestination" />
-		<property name="messageConverter" ref="serializableMessageConverter" />
+		<property name="destination" ref="downloadRequestDestination" />
+		<property name="messageListener" ref="downloadRequestHandler" />
+		<property name="sessionTransacted" value="true" />
+	</bean>
+	
+	<bean id="removeDownloadedDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${queue.remove.downloaded}" />
 	</bean>
 	
 	<bean
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
-		<property name="destination" ref="downloadRequestDestination" />
-		<property name="messageListener" ref="downloadRequestListener" />
+		<property name="destination" ref="removeDownloadedDestination" />
+		<property name="messageListener" ref="removeDownloadedHandler" />
 		<property name="sessionTransacted" value="true" />
 	</bean>
 	
@@ -50,15 +55,25 @@
 		<property name="messageConverter" ref="serializableMessageConverter" />
 	</bean>
 	
-	<bean id="downloadErrorDestination" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg value="${topic.download.error}" />
+	<bean id="errorOccurredDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="${topic.error.occured}" />
 	</bean>
 	
-	<bean id="downloadErrorTemplate" class="org.springframework.jms.core.JmsTemplate">
+	<bean id="errorOccurredTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="receiveTimeout" value="10000" />
-		<property name="defaultDestination" ref="downloadErrorDestination" />
+		<property name="defaultDestination" ref="errorOccurredDestination" />
 		<property name="messageConverter" ref="serializableMessageConverter" />
 	</bean>
 	
+	<bean id="fileRemovedDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="${topic.file.removed}" />
+	</bean>
+	
+	<bean id="fileRemovedTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="receiveTimeout" value="10000" />
+		<property name="defaultDestination" ref="fileRemovedDestination" />
+		<property name="messageConverter" ref="serializableMessageConverter" />
+	</bean>
 </beans>

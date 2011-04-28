@@ -3,18 +3,18 @@ package com.cd.message;
 import java.io.Serializable;
 import java.util.Date;
 
-public class DownloadError implements Serializable {
-	
+public class ErrorOccurred implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private String from;
-	private String url;
+	private String request;
 	private String message;
 	private Date time;
-	
-	public DownloadError(String from, String url, String message) {
+
+	public ErrorOccurred(String from, String request, String message) {
 		super();
 		this.from = from;
-		this.url = url;
+		this.request = request;
 		this.message = message;
 		time = new Date();
 	}
@@ -27,12 +27,12 @@ public class DownloadError implements Serializable {
 		this.from = from;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getRequest() {
+		return request;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setRequest(String request) {
+		this.request = request;
 	}
 
 	public String getMessage() {
@@ -50,6 +50,5 @@ public class DownloadError implements Serializable {
 	public void setTime(Date time) {
 		this.time = time;
 	}
-	
 
 }

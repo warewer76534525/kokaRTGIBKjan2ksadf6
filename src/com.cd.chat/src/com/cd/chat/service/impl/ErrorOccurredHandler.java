@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.support.JmsUtils;
 import org.springframework.stereotype.Service;
 
-import com.cd.message.DownloadCompleted;
+import com.cd.message.ErrorOccurred;
 
 
 @Service
-public class DownloadCompletedListener implements MessageListener {
-	protected final static Log log = LogFactory.getLog(DownloadCompletedListener.class);
+public class ErrorOccurredHandler implements MessageListener {
+	protected final static Log log = LogFactory.getLog(ErrorOccurredHandler.class);
+	
 	
 	@Autowired
 	private ChatManager chatManager;
@@ -26,10 +27,10 @@ public class DownloadCompletedListener implements MessageListener {
 		ObjectMessage mapMessage = (ObjectMessage) message;
 		
 		try {
-			DownloadCompleted downloadCompleted = (DownloadCompleted) mapMessage.getObject();
+			ErrorOccurred downloadError = (ErrorOccurred) mapMessage.getObject();
 			
-			String msg = String.format("[%s] Completed %s", downloadCompleted.getTime().toString(), downloadCompleted.getUrl());
-			chatManager.sendMessage(downloadCompleted.getFrom(), msg);
+			String msg = String.format("[%s] %s ", downloadError.getTime().toString(), downloadError.getMessage());
+			chatManager.sendMessage(downloadError.getFrom(), msg);
 		} catch (JMSException e) {
 			throw JmsUtils.convertJmsAccessException(e);
 		}

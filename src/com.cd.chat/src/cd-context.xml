@@ -37,6 +37,17 @@
 		<property name="messageConverter" ref="serializableMessageConverter" />
 	</bean>
 	
+	<bean id="removeDownloadedDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${queue.remove.downloaded}" />
+	</bean>
+	
+	<bean id="removeDownloadedTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="receiveTimeout" value="10000" />
+		<property name="defaultDestination" ref="removeDownloadedDestination" />
+		<property name="messageConverter" ref="serializableMessageConverter" />
+	</bean>
+	
 	<bean id="downloadCompletedDestination" class="org.apache.activemq.command.ActiveMQTopic">
 		<constructor-arg value="${topic.download.completed}" />
 	</bean>
@@ -45,23 +56,37 @@
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="downloadCompletedDestination" />
-		<property name="messageListener" ref="downloadCompletedListener" />
+		<property name="messageListener" ref="downloadCompletedHandler" />
 		<property name="sessionTransacted" value="true" />
 		<property name="subscriptionDurable" value="true" />
 		<property name="clientId" value="downloadCompletedListener"></property>
 	</bean>
 	
 	<bean id="downloadErrorDestination" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg value="${topic.download.error}" />
+		<constructor-arg value="${topic.error.occured}" />
 	</bean>
 	
 	<bean
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="downloadErrorDestination" />
-		<property name="messageListener" ref="downloadErrorListener" />
+		<property name="messageListener" ref="errorOccurredHandler" />
 		<property name="sessionTransacted" value="true" />
 		<property name="subscriptionDurable" value="true" />
 		<property name="clientId" value="downloadErrorListener"></property>
+	</bean>
+	
+	<bean id="fileRemovedDestination" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="${topic.file.removed}" />
+	</bean>
+	
+	<bean
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="fileRemovedDestination" />
+		<property name="messageListener" ref="fileRemovedHandler" />
+		<property name="sessionTransacted" value="true" />
+		<property name="subscriptionDurable" value="true" />
+		<property name="clientId" value="fileRemovedHandler"></property>
 	</bean>
 </beans>

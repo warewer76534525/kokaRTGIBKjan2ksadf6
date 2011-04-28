@@ -1,4 +1,4 @@
-package com.cd.downloader.service.impl;
+package com.cd.chat.service.impl;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -11,26 +11,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.support.JmsUtils;
 import org.springframework.stereotype.Service;
 
-import com.cd.downloader.service.IDownloadManager;
-import com.cd.message.DownlodaRequest;
+import com.cd.message.FileRemoved;
+
 
 @Service
-public class DownloadRequestListener implements MessageListener {
-	protected final static Log log = LogFactory.getLog(DownloadRequestListener.class);
+public class FileRemovedHandler implements MessageListener {
+	protected final static Log log = LogFactory.getLog(FileRemovedHandler.class);
 	
 	@Autowired
-	IDownloadManager downloadManager;
+	private ChatManager chatManager;
 	
 	@Override
 	public void onMessage(Message message) {
 		ObjectMessage mapMessage = (ObjectMessage) message;
 		
 		try {
-			DownlodaRequest downloadRequest = (DownlodaRequest) mapMessage.getObject();
-			downloadManager.queueDownloadRequest(downloadRequest);
+			FileRemoved fileRemoved = (FileRemoved) mapMessage.getObject();
+			
+			String msg = String.format("[%s] %s removed ", fileRemoved.getTime().toString(), fileRemoved.getFileName());
+			chatManager.sendMessage(fileRemoved.getFrom(), msg);
 		} catch (JMSException e) {
 			throw JmsUtils.convertJmsAccessException(e);
 		}
 	}
 
+	
 }

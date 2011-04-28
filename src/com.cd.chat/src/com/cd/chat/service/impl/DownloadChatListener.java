@@ -9,14 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-import com.cd.message.DownlodaRequest;
+import com.cd.message.DownlodRequest;
 
 
 @Service
-public class DownloadPacketListener implements PacketListener {
-	protected final static Log log = LogFactory.getLog(DownloadPacketListener.class);
-	private final static String DOWNLOAD_HTTP = "download http://";
+public class DownloadChatListener implements PacketListener {
+	protected final static Log log = LogFactory.getLog(DownloadChatListener.class);
+	private final static String DOWNLOAD_PATTERN = "d http://";
 	
+	/**
+	 * @uml.property  name="simpleDownloadTemplate"
+	 * @uml.associationEnd  readOnly="true"
+	 */
 	@Autowired
 	JmsTemplate simpleDownloadTemplate;
 	
@@ -25,13 +29,13 @@ public class DownloadPacketListener implements PacketListener {
 		Message msg = (Message) p;
 		
 		if (isDownloadMessage(msg.getBody())) {
-			DownlodaRequest downloadRequest = new DownlodaRequest(getFrom(msg.getFrom()), getUrl(msg.getBody()));
+			DownlodRequest downloadRequest = new DownlodRequest(getFrom(msg.getFrom()), getUrl(msg.getBody()));
 			simpleDownloadTemplate.convertAndSend(downloadRequest);
 		}
 	}
 
 	private String getUrl(String msg) {
-		return msg.trim().replaceAll(DOWNLOAD_HTTP, "http://");
+		return msg.trim().replaceAll(DOWNLOAD_PATTERN, "http://");
 	}
 	
 	private String getFrom(String from) {
@@ -42,7 +46,7 @@ public class DownloadPacketListener implements PacketListener {
 	}
 	
 	private boolean isDownloadMessage(String message) {
-		return message.contains(DOWNLOAD_HTTP);
+		return message.contains(DOWNLOAD_PATTERN);
 	}
 	
 	

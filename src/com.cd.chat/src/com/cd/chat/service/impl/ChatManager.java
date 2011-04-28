@@ -25,16 +25,26 @@ public class ChatManager {
 	
 	protected final static Log log = LogFactory.getLog(ChatManager.class);
 	
+	/**
+	 * @uml.property  name="connection"
+	 * @uml.associationEnd  readOnly="true"
+	 */
 	@Autowired
 	@Qualifier("xmppConnection")
 	private XMPPConnection connection;
 	
+	
 	@Autowired
-	private PacketListener downloadPacketListener;
+	private PacketListener downloadChatListener;
+	
+	@Autowired
+	private PacketListener removeChatListener;
 
+	
 	@Value("${xmpp.user}")
 	private String user;
 
+	
 	@Value("${xmpp.password}")
 	private String password;
 	
@@ -55,7 +65,8 @@ public class ChatManager {
 					connection.sendPacket(presence);
 					
 					PacketFilter filter = new AndFilter(new PacketTypeFilter(Message.class));
-					connection.addPacketListener(downloadPacketListener, filter);
+					connection.addPacketListener(downloadChatListener, filter);
+					connection.addPacketListener(removeChatListener, filter);
 					log.info("listening message ...");
 					 
 					System.in.read();

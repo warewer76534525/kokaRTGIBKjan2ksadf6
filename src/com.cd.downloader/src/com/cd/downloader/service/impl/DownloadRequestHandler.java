@@ -1,4 +1,4 @@
-package com.cd.chat.service.impl;
+package com.cd.downloader.service.impl;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -11,29 +11,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.support.JmsUtils;
 import org.springframework.stereotype.Service;
 
-import com.cd.message.DownloadError;
-
+import com.cd.downloader.service.IDownloadManager;
+import com.cd.message.DownlodRequest;
 
 @Service
-public class DownloadErrorListener implements MessageListener {
-	protected final static Log log = LogFactory.getLog(DownloadErrorListener.class);
+public class DownloadRequestHandler implements MessageListener {
+	protected final static Log log = LogFactory.getLog(DownloadRequestHandler.class);
 	
 	@Autowired
-	private ChatManager chatManager;
+	IDownloadManager downloadManager;
 	
 	@Override
 	public void onMessage(Message message) {
 		ObjectMessage mapMessage = (ObjectMessage) message;
 		
 		try {
-			DownloadError downloadError = (DownloadError) mapMessage.getObject();
-			
-			String msg = String.format("[%s] %s ", downloadError.getTime().toString(), downloadError.getMessage());
-			chatManager.sendMessage(downloadError.getFrom(), msg);
+			DownlodRequest downloadRequest = (DownlodRequest) mapMessage.getObject();
+			downloadManager.queueDownloadRequest(downloadRequest);
 		} catch (JMSException e) {
 			throw JmsUtils.convertJmsAccessException(e);
 		}
 	}
 
-	
 }

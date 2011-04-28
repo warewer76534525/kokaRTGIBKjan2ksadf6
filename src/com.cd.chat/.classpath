@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/external-lib/activemq-all-5.4.2.jar"/>
 	<classpathentry kind="lib" path="/external-lib/commons-collections-3.2.1.jar"/>
@@ -27,5 +28,7 @@
 	<classpathentry kind="lib" path="/external-lib/smackx-jingle.jar"/>
 	<classpathentry kind="lib" path="/external-lib/smackx.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/com.cd.message"/>
+	<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

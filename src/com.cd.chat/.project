@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>com.cd.chat</name>
-	<comment></comment>
+	<comment>@key 32303037303533312D313020636F6D2E63642E636861742F61646973656D626972696E67 </comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -15,9 +15,15 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.soyatec.additional.Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.springframework.ide.eclipse.core.springnature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>com.soyatec.additional.Nature</nature>
 	</natures>
 </projectDescription>
