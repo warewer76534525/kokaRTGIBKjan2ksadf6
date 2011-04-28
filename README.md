@@ -29,6 +29,8 @@ Masuk ke directory src
 	ant installer
 	
 ant akan menggenerate installer ke folder chatdownloader/installer. terdapat 3 jenis binary
+* [bin-linux-x86-32] -- `gem install redcarpet`
+* [.textile](http://www.textism.com/tools/textile/) -- `gem install RedCloth`
 * bin-linux-x86-32
 * bin-linux-x86-64
 * bin-win-x86-32
@@ -38,15 +40,20 @@ Pilih binary yang sesuai dengan platform, lalu rename menjadi bin. mislanya bin-
 Masuk ke directory installer -> chatdownloader/installer
 
 Program ini akan di install di windows sebagai windows service.
-Install windows service dengan menjalankan Install.bat file
-Jalankan service dengan menjalankan Startup.bat
+
+Install windows service dengan menjalankan 
+	$Install.bat
+
+Jalankan service dengan menjalankan 
+	$Startup.bat
 
 ### Install di Unix
 Masuk ke directory installer -> chatdownloader/installer
+
 Jalankan command
-	sh startup.sh
+	$sh startup.sh
 
 Usage
 =============
-download file: [d url], ex. d https://d3nwyuy0nl342s.cloudfront.net/images/modules/header/logov3-hover.png
-remove file: [r url], ex. r logov3-hover.png
+	download file: [d url], ex. d https://d3nwyuy0nl342s.cloudfront.net/images/modules/header/logov3-hover.png
+	remove file: [r url], ex. r logov3-hover.png
