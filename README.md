@@ -6,7 +6,7 @@ Software ini digunakan untuk mendownload file dengan cara mentriger download mel
 Software Required
 -------
 
-Untuk menjalankan software diperlukan ActiveMQ (http://activemq.apache.org/download.html)
+Untuk menjalankan software diperlukan [ActiveMQ](http://activemq.apache.org/download.html)
 
 Instalasi
 ------------
@@ -23,22 +23,22 @@ Pada directory src terdapat dua service project, masing-masing project memiliki 
 	downloaded.dir = D:/Downloads/cd -- dimana hasil download di simpan
 	download.url = http://202.51.96.30/adyMNHYDSdfs1234/ -- dimana hasil download dapat di download
 
-Want to contribute? Great! There are two ways to add markups.
 
 ### Generate Installer
 Masuk ke directory src
 
 	ant installer
 	
-ant akan menggenerate installer ke folder chatdownloader/installer. terdapat 3 jenis binary
+ant akan menggenerate installer ke folder `chatdownloader/installer`. terdapat 3 jenis binary
 
 * bin-linux-x86-32
 * bin-linux-x86-64
 * bin-win-x86-32
-Pilih binary yang sesuai dengan platform, lalu rename menjadi bin. mislanya bin-win-x86-32 => bin
+
+Pilih binary yang sesuai dengan platform, lalu rename menjadi bin. mislanya `bin-win-x86-32` => `bin`
 
 ### Install di Windows
-Masuk ke directory installer -> chatdownloader/installer
+Masuk ke directory installer -> `chatdownloader/installer`
 
 Program ini akan di install di windows sebagai windows service.
 
@@ -49,7 +49,7 @@ Jalankan service dengan menjalankan
 	$Startup.bat
 
 ### Install di Unix
-Masuk ke directory installer -> chatdownloader/installer
+Masuk ke directory installer -> `chatdownloader/installer`
 
 Jalankan command
 	$sh startup.sh
