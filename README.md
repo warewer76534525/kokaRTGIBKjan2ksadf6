@@ -16,10 +16,12 @@ Pada directory src terdapat dua service project, masing-masing project memiliki 
 
 * `com.cd.chat/src/application.properties`, yang perlu di perhatikan adalah:
 
+
 	xmpp.user=gtalkuser
 	xmpp.password=gtalkpassword
 	
 * `com.cd.downloader/src/application.properties`, yang perlu di perhatikan adalah:
+
 
 	downloaded.dir = D:/Downloads/cd -- dimana hasil download di simpan
 	download.url = http://202.51.96.30/adyMNHYDSdfs1234/ -- dimana hasil download dapat di download
