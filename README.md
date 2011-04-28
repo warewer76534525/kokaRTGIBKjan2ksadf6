@@ -14,13 +14,13 @@ Instalasi
 ### Konfigurasi
 Pada directory src terdapat dua service project, masing-masing project memiliki konfigurasi sendiri sendiri
 
-* `com.cd.chat/src/application.properties`, yang perlu di perhatikan adalah:
+- `com.cd.chat/src/application.properties`, yang perlu di perhatikan adalah:
 
 
 	xmpp.user=gtalkuser
 	xmpp.password=gtalkpassword
 	
-* `com.cd.downloader/src/application.properties`, yang perlu di perhatikan adalah:
+- `com.cd.downloader/src/application.properties`, yang perlu di perhatikan adalah:
 
 
 	downloaded.dir = D:/Downloads/cd -- dimana hasil download di simpan
