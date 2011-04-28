@@ -46,15 +46,18 @@ Masuk ke directory installer -> `chatdownloader/installer`
 Program ini akan di install di windows sebagai windows service.
 
 Install windows service dengan menjalankan 
+
 	$Install.bat
 
 Jalankan service dengan menjalankan 
+
 	$Startup.bat
 
 ### Install di Unix
 Masuk ke directory installer -> `chatdownloader/installer`
 
 Jalankan command
+
 	$sh startup.sh
 
 Usage
