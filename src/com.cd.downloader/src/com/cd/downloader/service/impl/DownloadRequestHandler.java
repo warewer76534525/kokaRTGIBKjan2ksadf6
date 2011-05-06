@@ -24,7 +24,6 @@ public class DownloadRequestHandler implements MessageListener {
 	@Override
 	public void onMessage(Message message) {
 		ObjectMessage mapMessage = (ObjectMessage) message;
-		
 		try {
 			DownlodRequest downloadRequest = (DownlodRequest) mapMessage.getObject();
 			downloadManager.queueDownloadRequest(downloadRequest);

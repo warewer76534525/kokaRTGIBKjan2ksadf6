@@ -9,33 +9,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+import com.cd.chat.specification.DownloadRequestSpecification;
 import com.cd.message.DownlodRequest;
 
 
 @Service
 public class DownloadChatListener implements PacketListener {
 	protected final static Log log = LogFactory.getLog(DownloadChatListener.class);
-	private final static String DOWNLOAD_PATTERN = "d http://";
+	private static final String DOWNLOAD_PREFIX = "^d\\s";
 	
-	/**
-	 * @uml.property  name="simpleDownloadTemplate"
-	 * @uml.associationEnd  readOnly="true"
-	 */
 	@Autowired
 	JmsTemplate simpleDownloadTemplate;
+	DownloadRequestSpecification spec;
+	
+	public DownloadChatListener() {
+		spec = new DownloadRequestSpecification();
+	}
 	
 	@Override
 	public void processPacket(Packet p) {
 		Message msg = (Message) p;
 		
-		if (isDownloadMessage(msg.getBody())) {
+		if (spec.isSatisfiedBy(msg.getBody())) {
 			DownlodRequest downloadRequest = new DownlodRequest(getFrom(msg.getFrom()), getUrl(msg.getBody()));
 			simpleDownloadTemplate.convertAndSend(downloadRequest);
 		}
 	}
 
 	private String getUrl(String msg) {
-		return msg.trim().replaceAll(DOWNLOAD_PATTERN, "http://");
+		return msg.trim().replaceAll(DOWNLOAD_PREFIX, "");
 	}
 	
 	private String getFrom(String from) {
@@ -44,11 +46,6 @@ public class DownloadChatListener implements PacketListener {
 		
 		return formUser;
 	}
-	
-	private boolean isDownloadMessage(String message) {
-		return message.contains(DOWNLOAD_PATTERN);
-	}
-	
 	
 	
 }

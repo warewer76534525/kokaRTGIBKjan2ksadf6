@@ -8,10 +8,10 @@ import org.junit.Test;
 
 import junit.framework.Assert;
 
-public class When_valid_download_arrive {
+public class When_valid_remove_request_arrive {
 	private Pattern pattern;
 	private Matcher matcher;
-	private static final String REMOVE_PATTERN = "@\\s[_a-zA-Z0-9\\-\\.]*";
+	private static final String REMOVE_PATTERN = "r\\s[_a-zA-Z0-9\\-\\.]*";
 	
 	
 	@Before
@@ -21,7 +21,7 @@ public class When_valid_download_arrive {
 	
 	@Test
 	public void testValidRequest() {
-		String request = "@ data.com";
+		String request = "@r data.com";
 		
 		matcher = pattern.matcher(request);
 		Assert.assertTrue(matcher.matches());
@@ -29,7 +29,7 @@ public class When_valid_download_arrive {
 	
 	@Test
 	public void testValidExtRequest() {
-		String request = "d adi.zip";
+		String request = "r adi.zip";
 		
 		matcher = pattern.matcher(request);
 		Assert.assertTrue(matcher.matches());
@@ -37,7 +37,7 @@ public class When_valid_download_arrive {
 	
 	@Test
 	public void testWithoutFileRequest() {
-		String request = "d ";
+		String request = "r ";
 		
 		matcher = pattern.matcher(request);
 		Assert.assertTrue(matcher.matches());

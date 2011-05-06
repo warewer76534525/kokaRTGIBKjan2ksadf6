@@ -30,6 +30,7 @@
 		<property name="destination" ref="downloadRequestDestination" />
 		<property name="messageListener" ref="downloadRequestHandler" />
 		<property name="sessionTransacted" value="true" />
+		<property name="concurrentConsumers" value="10"></property>
 	</bean>
 	
 	<bean id="removeDownloadedDestination" class="org.apache.activemq.command.ActiveMQQueue">
