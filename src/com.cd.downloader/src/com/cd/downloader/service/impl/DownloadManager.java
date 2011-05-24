@@ -12,10 +12,10 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import com.cd.downloader.service.IDownloadManager;
-import com.cd.message.DownlodRequest;
+import com.cd.message.DownloadFile;
 import com.cd.message.ErrorOccurred;
 import com.cd.message.FileRemoved;
-import com.cd.message.RemoveDownloaded;
+import com.cd.message.RemoveFile;
 
 
 @Service
@@ -39,12 +39,12 @@ public class DownloadManager implements IDownloadManager {
 	private TaskExecutor taskExecutor;
 	
 	@Override
-	public void queueDownloadRequest(DownlodRequest downloadRequest) {
+	public void queueDownloadRequest(DownloadFile downloadRequest) {
 		taskExecutor.execute(new SimpleDownloadTask(downloadCompledTemplate, errorOccurredTemplate, new SimpleFileDownloader(downloadedDir), downloadRequest, downloadUrl));
 	}
 
 	@Override
-	public void removeDownloadedFile(RemoveDownloaded removeDownloaded) {
+	public void removeDownloadedFile(RemoveFile removeDownloaded) {
 		try {
 			FileUtils.forceDelete(new File(downloadedDir, removeDownloaded.getFileName()));
 			FileRemoved fileRemoved = new FileRemoved(removeDownloaded.getFrom(), removeDownloaded.getFileName());

@@ -3,14 +3,14 @@ package com.cd.message;
 import java.io.Serializable;
 import java.util.Date;
 
-public class RemoveDownloaded implements Serializable {
+public class RemoveFile implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String from;
 	private String fileName;
 	private Date time;
 
-	public RemoveDownloaded(String from, String fileName) {
+	public RemoveFile(String from, String fileName) {
 		super();
 		this.from = from;
 		this.fileName = fileName;
@@ -51,7 +51,7 @@ public class RemoveDownloaded implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RemoveDownloaded [from=" + from + ", fileName=" + fileName
+		return "RemoveFile [from=" + from + ", fileName=" + fileName
 				+ ", time=" + time + "]";
 	}
 

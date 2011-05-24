@@ -1,7 +1,5 @@
 package com.cd.chat.service.impl;
 
-import java.io.IOException;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -25,10 +23,6 @@ public class ChatManager {
 	
 	protected final static Log log = LogFactory.getLog(ChatManager.class);
 	
-	/**
-	 * @uml.property  name="connection"
-	 * @uml.associationEnd  readOnly="true"
-	 */
 	@Autowired
 	@Qualifier("xmppConnection")
 	private XMPPConnection connection;
@@ -47,7 +41,6 @@ public class ChatManager {
 	
 	@Value("${xmpp.password}")
 	private String password;
-	
 	
 
 	@PostConstruct
@@ -71,14 +64,11 @@ public class ChatManager {
 					 
 					System.in.read();
 					 
-					// set presence status to unavailable
+					// set presence status to unavailable when thrad end
 					presence = new Presence(Presence.Type.unavailable);
 					connection.sendPacket(presence);
-				} catch (XMPPException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					
-					e.printStackTrace();
+				} catch (Exception e) {
+					log.error(e.getMessage(), e);
 				}
 			}
 		};

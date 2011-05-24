@@ -15,7 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cd.downloader.service.IDownloadManager;
-import com.cd.message.DownlodRequest;
+import com.cd.message.DownloadFile;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,7 +24,7 @@ public class When_double_download_request_arrive {
 	
 	@Autowired
 	private IDownloadManager _downloadManager;
-	private List<DownlodRequest> _downloadRequests = new ArrayList<DownlodRequest>();
+	private List<DownloadFile> _downloadRequests = new ArrayList<DownloadFile>();
 	
 	@Value("${downloaded.dir}")
 	private String downloadedDir;
@@ -34,8 +34,8 @@ public class When_double_download_request_arrive {
 	
 	@Before
 	public void setUp() {
-		DownlodRequest downloadRequest1 = new DownlodRequest("sembiring.adi@gmail.com", URL1);
-		DownlodRequest downloadRequest2 = new DownlodRequest("sembiring.adi@gmail.com", URL2);
+		DownloadFile downloadRequest1 = new DownloadFile("sembiring.adi@gmail.com", URL1);
+		DownloadFile downloadRequest2 = new DownloadFile("sembiring.adi@gmail.com", URL2);
 		
 		_downloadRequests.add(downloadRequest1);
 		_downloadRequests.add(downloadRequest2);
@@ -43,7 +43,7 @@ public class When_double_download_request_arrive {
 	
 	@Test
 	public void should_able_to_download_request() throws InterruptedException {
-		for (DownlodRequest downloadRequest : _downloadRequests) {
+		for (DownloadFile downloadRequest : _downloadRequests) {
 			_downloadManager.queueDownloadRequest(downloadRequest);
 			File downloadedFile = new File(downloadedDir, downloadRequest.getFileName());
 			

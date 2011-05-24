@@ -1,9 +1,9 @@
 package com.cd.downloader.service;
 
-import com.cd.message.DownlodRequest;
-import com.cd.message.RemoveDownloaded;
+import com.cd.message.DownloadFile;
+import com.cd.message.RemoveFile;
 
 public interface IDownloadManager {
-	void queueDownloadRequest(DownlodRequest downloadRequest );
-	void removeDownloadedFile(RemoveDownloaded removeDownloaded );
+	void queueDownloadRequest(DownloadFile downloadRequest );
+	void removeDownloadedFile(RemoveFile removeDownloaded );
 }

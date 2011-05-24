@@ -28,7 +28,7 @@
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="downloadRequestDestination" />
-		<property name="messageListener" ref="downloadRequestHandler" />
+		<property name="messageListener" ref="downloadFileHandler" />
 		<property name="sessionTransacted" value="true" />
 		<property name="concurrentConsumers" value="10"></property>
 	</bean>
@@ -41,7 +41,7 @@
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="removeDownloadedDestination" />
-		<property name="messageListener" ref="removeDownloadedHandler" />
+		<property name="messageListener" ref="removeFileHandler" />
 		<property name="sessionTransacted" value="true" />
 	</bean>
 	

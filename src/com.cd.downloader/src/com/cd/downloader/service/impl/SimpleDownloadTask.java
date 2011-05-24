@@ -6,22 +6,22 @@ import org.springframework.jms.core.JmsTemplate;
 
 import com.cd.downloader.service.IFileDownloader;
 import com.cd.message.ErrorOccurred;
-import com.cd.message.DownloadCompleted;
-import com.cd.message.DownlodRequest;
+import com.cd.message.FileDownloaded;
+import com.cd.message.DownloadFile;
 
 
 public class SimpleDownloadTask implements Runnable {
 	protected final static Log log = LogFactory.getLog(SimpleDownloadTask.class);
 	
 	private IFileDownloader _simpleFileDownloader;
-	private DownlodRequest _downloadRequest;
+	private DownloadFile _downloadFile;
 	private JmsTemplate _downloadCompledTemplate;
 	private JmsTemplate _errorOccurredTemplate;
 	private String _downloadUrl;
 
-	public SimpleDownloadTask(JmsTemplate downloadCompledTemplate, JmsTemplate errorOccurredTemplate, IFileDownloader simpleFileDownloader, DownlodRequest downloadRequest, String downloadUrl) {
+	public SimpleDownloadTask(JmsTemplate downloadCompledTemplate, JmsTemplate errorOccurredTemplate, IFileDownloader simpleFileDownloader, DownloadFile downloadFile, String downloadUrl) {
 		_simpleFileDownloader = simpleFileDownloader;
-		_downloadRequest = downloadRequest;
+		_downloadFile = downloadFile;
 		_downloadCompledTemplate = downloadCompledTemplate;
 		_errorOccurredTemplate = errorOccurredTemplate;
 		_downloadUrl = downloadUrl;
@@ -29,17 +29,18 @@ public class SimpleDownloadTask implements Runnable {
 
 	public void run() {
 		try {
-			log.info("Download begin " + _downloadRequest.getFileName());
-			_simpleFileDownloader.download(_downloadRequest);
+			log.info("Download begin " + _downloadFile.getFileName());
+			_simpleFileDownloader.download(_downloadFile);
 			
-			String  downloadUrl =  _downloadUrl + _downloadRequest.getFileName(); 
-			DownloadCompleted downloadCompleted = new DownloadCompleted(_downloadRequest.getFrom(), _downloadRequest.getUrl(), downloadUrl);
+			String  downloadUrl =  _downloadUrl + _downloadFile.getFileName(); 
+			FileDownloaded downloadCompleted = new FileDownloaded(_downloadFile.getFrom(), _downloadFile.getUrl(), downloadUrl);
 			_downloadCompledTemplate.convertAndSend(downloadCompleted);	
 			
-			log.info("Donwload completed " + _downloadRequest.getFileName());
+			log.info("Donwload completed " + _downloadFile.getFileName());
 		} catch (Exception e) {
-			ErrorOccurred downloadError = new ErrorOccurred(_downloadRequest.getFrom(), _downloadRequest.getUrl(), e.getMessage());
-			_errorOccurredTemplate.convertAndSend(downloadError);	
+			ErrorOccurred downloadError = new ErrorOccurred(_downloadFile.getFrom(), _downloadFile.getUrl(), e.getMessage());
+			_errorOccurredTemplate.convertAndSend(downloadError);
+			log.error(e.getMessage(), e);
 		}
 	}
 

@@ -12,11 +12,11 @@ import org.springframework.jms.support.JmsUtils;
 import org.springframework.stereotype.Service;
 
 import com.cd.downloader.service.IDownloadManager;
-import com.cd.message.RemoveDownloaded;
+import com.cd.message.RemoveFile;
 
 @Service
-public class RemoveDownloadedHandler implements MessageListener {
-	protected final static Log log = LogFactory.getLog(RemoveDownloadedHandler.class);
+public class RemoveFileHandler implements MessageListener {
+	protected final static Log log = LogFactory.getLog(RemoveFileHandler.class);
 	
 	@Autowired
 	IDownloadManager downloadManager;
@@ -26,7 +26,7 @@ public class RemoveDownloadedHandler implements MessageListener {
 		ObjectMessage mapMessage = (ObjectMessage) message;
 		
 		try {
-			RemoveDownloaded removeDownloaded = (RemoveDownloaded) mapMessage.getObject();
+			RemoveFile removeDownloaded = (RemoveFile) mapMessage.getObject();
 			downloadManager.removeDownloadedFile(removeDownloaded);
 		} catch (JMSException e) {
 			throw JmsUtils.convertJmsAccessException(e);

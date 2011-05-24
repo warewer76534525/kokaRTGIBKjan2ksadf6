@@ -10,7 +10,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import com.cd.chat.specification.RemoveRequestSpecification;
-import com.cd.message.RemoveDownloaded;
+import com.cd.message.RemoveFile;
 
 
 @Service
@@ -32,7 +32,7 @@ public class RemoveChatListener implements PacketListener {
 	public void processPacket(Packet p) {
 		Message msg = (Message) p;
 		if (spec.isSatisfiedBy(msg.getBody())) {
-			RemoveDownloaded removeDownloaded = new RemoveDownloaded(getFrom(msg.getFrom()), getFileName(msg.getBody()));
+			RemoveFile removeDownloaded = new RemoveFile(getFrom(msg.getFrom()), getFileName(msg.getBody()));
 			removeDownloadedTemplate.convertAndSend(removeDownloaded);
 		}
 	}

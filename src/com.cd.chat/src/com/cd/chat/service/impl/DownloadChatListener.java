@@ -10,7 +10,7 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
 import com.cd.chat.specification.DownloadRequestSpecification;
-import com.cd.message.DownlodRequest;
+import com.cd.message.DownloadFile;
 
 
 @Service
@@ -19,8 +19,8 @@ public class DownloadChatListener implements PacketListener {
 	private static final String DOWNLOAD_PREFIX = "^d\\s";
 	
 	@Autowired
-	JmsTemplate simpleDownloadTemplate;
-	DownloadRequestSpecification spec;
+	private JmsTemplate simpleDownloadTemplate;
+	private DownloadRequestSpecification spec;
 	
 	public DownloadChatListener() {
 		spec = new DownloadRequestSpecification();
@@ -29,9 +29,9 @@ public class DownloadChatListener implements PacketListener {
 	@Override
 	public void processPacket(Packet p) {
 		Message msg = (Message) p;
-		
+		log.info("incomming message");
 		if (spec.isSatisfiedBy(msg.getBody())) {
-			DownlodRequest downloadRequest = new DownlodRequest(getFrom(msg.getFrom()), getUrl(msg.getBody()));
+			DownloadFile downloadRequest = new DownloadFile(getFrom(msg.getFrom()), getUrl(msg.getBody()));
 			simpleDownloadTemplate.convertAndSend(downloadRequest);
 		}
 	}

@@ -56,10 +56,10 @@
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="downloadCompletedDestination" />
-		<property name="messageListener" ref="downloadCompletedHandler" />
+		<property name="messageListener" ref="fileDownloadedHandler" />
 		<property name="sessionTransacted" value="true" />
 		<property name="subscriptionDurable" value="true" />
-		<property name="clientId" value="downloadCompletedListener"></property>
+		<property name="clientId" value="fileDownloadedHandler"></property>
 	</bean>
 	
 	<bean id="downloadErrorDestination" class="org.apache.activemq.command.ActiveMQTopic">
@@ -73,7 +73,7 @@
 		<property name="messageListener" ref="errorOccurredHandler" />
 		<property name="sessionTransacted" value="true" />
 		<property name="subscriptionDurable" value="true" />
-		<property name="clientId" value="downloadErrorListener"></property>
+		<property name="clientId" value="errorOccurredHandler"></property>
 	</bean>
 	
 	<bean id="fileRemovedDestination" class="org.apache.activemq.command.ActiveMQTopic">

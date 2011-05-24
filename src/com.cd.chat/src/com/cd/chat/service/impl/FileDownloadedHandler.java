@@ -11,17 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.support.JmsUtils;
 import org.springframework.stereotype.Service;
 
-import com.cd.message.DownloadCompleted;
+import com.cd.message.FileDownloaded;
 
 
 @Service
-public class DownloadCompletedHandler implements MessageListener {
-	protected final static Log log = LogFactory.getLog(DownloadCompletedHandler.class);
+public class FileDownloadedHandler implements MessageListener {
+	protected final static Log log = LogFactory.getLog(FileDownloadedHandler.class);
 	
-	/**
-	 * @uml.property  name="chatManager"
-	 * @uml.associationEnd  
-	 */
 	@Autowired
 	private ChatManager chatManager;
 	
@@ -30,8 +26,7 @@ public class DownloadCompletedHandler implements MessageListener {
 		ObjectMessage mapMessage = (ObjectMessage) message;
 		
 		try {
-			DownloadCompleted downloadCompleted = (DownloadCompleted) mapMessage.getObject();
-			
+			FileDownloaded downloadCompleted = (FileDownloaded) mapMessage.getObject();
 			String msg = String.format("[%s] Completed %s \n download url: %s", downloadCompleted.getTime().toString(), downloadCompleted.getUrl(), downloadCompleted.getDownloadUrl());
 			chatManager.sendMessage(downloadCompleted.getFrom(), msg);
 		} catch (JMSException e) {

@@ -12,11 +12,11 @@ import org.springframework.jms.support.JmsUtils;
 import org.springframework.stereotype.Service;
 
 import com.cd.downloader.service.IDownloadManager;
-import com.cd.message.DownlodRequest;
+import com.cd.message.DownloadFile;
 
 @Service
-public class DownloadRequestHandler implements MessageListener {
-	protected final static Log log = LogFactory.getLog(DownloadRequestHandler.class);
+public class DownloadFileHandler implements MessageListener {
+	protected final static Log log = LogFactory.getLog(DownloadFileHandler.class);
 	
 	@Autowired
 	IDownloadManager downloadManager;
@@ -25,7 +25,7 @@ public class DownloadRequestHandler implements MessageListener {
 	public void onMessage(Message message) {
 		ObjectMessage mapMessage = (ObjectMessage) message;
 		try {
-			DownlodRequest downloadRequest = (DownlodRequest) mapMessage.getObject();
+			DownloadFile downloadRequest = (DownloadFile) mapMessage.getObject();
 			downloadManager.queueDownloadRequest(downloadRequest);
 		} catch (JMSException e) {
 			throw JmsUtils.convertJmsAccessException(e);
