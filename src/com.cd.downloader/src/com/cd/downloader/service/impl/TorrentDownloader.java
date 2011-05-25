@@ -99,6 +99,7 @@ public class TorrentDownloader implements IFileDownloader {
 						boolean downloadCompleted = false;
 						while(!downloadCompleted){
 							AzureusCore core = AzureusCoreFactory.getSingleton();
+							@SuppressWarnings("unchecked")
 							List<DownloadManager> managers = core.getGlobalManager().getDownloadManagers();
 
 							//There is only one in the queue.
