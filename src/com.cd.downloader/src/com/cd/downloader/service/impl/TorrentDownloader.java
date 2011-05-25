@@ -52,15 +52,6 @@ public class TorrentDownloader implements IFileDownloader {
 			core.start();
 		}
 		
-		//Clear out any previously saved download managerst there might be.
-		@SuppressWarnings("unchecked")
-		List<DownloadManager> downloadManagers = core.getGlobalManager().getDownloadManagers();
-		for(DownloadManager manager : downloadManagers){
-			try {
-				core.getGlobalManager().removeDownloadManager(manager);
-			} catch (Exception e) { /* Nothing we can really do here */}
-		}
-		
 		System.out.println("Attempting to download torrent at : " + url);
 		
 		File downloadedTorrentFile = downloadTorrentFile(new URL(url));
@@ -94,27 +85,39 @@ public class TorrentDownloader implements IFileDownloader {
 				break;
 				case DownloadManager.STATE_DOWNLOADING :
 					System.out.println("Downloading....");
-				
-					try{
-						boolean downloadCompleted = false;
-						while(!downloadCompleted){
-							AzureusCore core = AzureusCoreFactory.getSingleton();
-							@SuppressWarnings("unchecked")
-							List<DownloadManager> managers = core.getGlobalManager().getDownloadManagers();
+					
+					//Start a new daemon thread periodically check 
+					//the progress of the upload and print it out 
+					//to the command line
+					Runnable checkAndPrintProgress = new Runnable(){
+						@SuppressWarnings("unchecked")
+						public void run(){
+							try{
+								boolean downloadCompleted = false;
+								while(!downloadCompleted){
+									AzureusCore core = AzureusCoreFactory.getSingleton();
+									List<DownloadManager> managers = core.getGlobalManager().getDownloadManagers();
 
-							//There is only one in the queue.
-							DownloadManager man = managers.get(0);
-							System.out.println("Download is " + 
-											   (man.getStats().getCompleted() / 10.0) + 
-											   " % complete");
-							downloadCompleted = man.isDownloadComplete(true);
-							//Check every 10 seconds on the progress
-							Thread.sleep(20000);
+									//There is only one in the queue.
+									DownloadManager man = managers.get(0);
+									System.out.println("Download is " + 
+													   (man.getStats().getCompleted() / 10.0) + 
+													   " % complete");
+									downloadCompleted = man.isDownloadComplete(true);
+									//Check every 10 seconds on the progress
+									Thread.sleep(10000);
+								}
+
+							}catch(Exception e){
+								throw new RuntimeException(e);
+							}
+
 						}
-
-					}catch(Exception e){
-						throw new RuntimeException(e);
-					}
+					};
+					
+					Thread progressChecker = new Thread(checkAndPrintProgress);
+					progressChecker.setDaemon(true);
+					progressChecker.start();
 				break;
 				case DownloadManager.STATE_FINISHING :
 					System.out.println("Finishing Download....");
