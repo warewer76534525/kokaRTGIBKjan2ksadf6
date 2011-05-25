@@ -109,6 +109,7 @@ public class TorrentDownloader implements IFileDownloader {
 											   " % complete");
 							downloadCompleted = man.isDownloadComplete(true);
 							//Check every 10 seconds on the progress
+							Thread.sleep(20000);
 						}
 
 					}catch(Exception e){
