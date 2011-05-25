@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="/external-lib/org.springframework.test-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="/external-lib/org.springframework.transaction-3.0.5.RELEASE.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/com.cd.message"/>
+	<classpathentry kind="lib" path="/external-lib/Vuze_4604.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

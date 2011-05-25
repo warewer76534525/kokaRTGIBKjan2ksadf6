@@ -42,6 +42,11 @@ public class DownloadManager implements IDownloadManager {
 	public void queueDownloadRequest(DownloadFile downloadRequest) {
 		taskExecutor.execute(new SimpleDownloadTask(downloadCompledTemplate, errorOccurredTemplate, new SimpleFileDownloader(downloadedDir), downloadRequest, downloadUrl));
 	}
+	
+	@Override
+	public void queueTorrentDownloadRequest(DownloadFile downloadRequest) {
+		taskExecutor.execute(new SimpleDownloadTask(downloadCompledTemplate, errorOccurredTemplate, new TorrentDownloader(downloadedDir), downloadRequest, downloadUrl));
+	}
 
 	@Override
 	public void removeDownloadedFile(RemoveFile removeDownloaded) {

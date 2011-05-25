@@ -33,6 +33,9 @@ public class ChatManager {
 	
 	@Autowired
 	private PacketListener removeChatListener;
+	
+	@Autowired
+	private PacketListener torrentDownloadChatListener;
 
 	
 	@Value("${xmpp.user}")
@@ -60,6 +63,7 @@ public class ChatManager {
 					PacketFilter filter = new AndFilter(new PacketTypeFilter(Message.class));
 					connection.addPacketListener(downloadChatListener, filter);
 					connection.addPacketListener(removeChatListener, filter);
+					connection.addPacketListener(torrentDownloadChatListener, filter);
 					log.info("listening message ...");
 					 
 					System.in.read();

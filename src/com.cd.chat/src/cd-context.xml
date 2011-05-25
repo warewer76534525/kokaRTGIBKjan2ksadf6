@@ -37,6 +37,17 @@
 		<property name="messageConverter" ref="serializableMessageConverter" />
 	</bean>
 	
+	<bean id="torrentRequestDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${queue.torrent.request}" />
+	</bean>
+	
+	<bean id="torrentDownloadTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="receiveTimeout" value="10000" />
+		<property name="defaultDestination" ref="torrentRequestDestination" />
+		<property name="messageConverter" ref="serializableMessageConverter" />
+	</bean>
+	
 	<bean id="removeDownloadedDestination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="${queue.remove.downloaded}" />
 	</bean>

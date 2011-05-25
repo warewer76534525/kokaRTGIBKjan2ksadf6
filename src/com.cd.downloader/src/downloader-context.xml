@@ -33,6 +33,19 @@
 		<property name="concurrentConsumers" value="10"></property>
 	</bean>
 	
+	<bean id="torrentRequestDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="${queue.torrent.request}" />
+	</bean>
+	
+	<bean
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="torrentRequestDestination" />
+		<property name="messageListener" ref="torrentDownloadHandler" />
+		<property name="sessionTransacted" value="true" />
+		<property name="concurrentConsumers" value="10"></property>
+	</bean>
+	
 	<bean id="removeDownloadedDestination" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg value="${queue.remove.downloaded}" />
 	</bean>
