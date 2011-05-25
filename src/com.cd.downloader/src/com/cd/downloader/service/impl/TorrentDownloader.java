@@ -45,9 +45,12 @@ public class TorrentDownloader implements IFileDownloader {
 		System.setProperty("azureus.config.path", "run-environment/az-config");
 		
 		
- 
-		core = AzureusCoreFactory.create();
-		core.start();
+		if (AzureusCoreFactory.isCoreAvailable()) { 
+			core = AzureusCoreFactory.getSingleton();
+		} else {
+			core = AzureusCoreFactory.create();
+			core.start();
+		}
 		
 		//Clear out any previously saved download managerst there might be.
 		@SuppressWarnings("unchecked")
