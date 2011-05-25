@@ -7,7 +7,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
@@ -35,17 +34,15 @@ public class DownloadManager implements IDownloadManager {
 	@Autowired
 	private JmsTemplate fileRemovedTemplate;
 	
-	@Autowired
-	private TaskExecutor taskExecutor;
 	
 	@Override
 	public void queueDownloadRequest(DownloadFile downloadRequest) {
-		taskExecutor.execute(new SimpleDownloadTask(downloadCompledTemplate, errorOccurredTemplate, new SimpleFileDownloader(downloadedDir), downloadRequest, downloadUrl));
+		new SimpleDownloadTask(downloadCompledTemplate, errorOccurredTemplate, new SimpleFileDownloader(downloadedDir), downloadRequest, downloadUrl).start();
 	}
 	
 	@Override
 	public void queueTorrentDownloadRequest(DownloadFile downloadRequest) {
-		taskExecutor.execute(new SimpleDownloadTask(downloadCompledTemplate, errorOccurredTemplate, new TorrentDownloader(downloadedDir), downloadRequest, downloadUrl));
+		new SimpleDownloadTask(downloadCompledTemplate, errorOccurredTemplate, new TorrentDownloader(downloadedDir), downloadRequest, downloadUrl).start();
 	}
 
 	@Override

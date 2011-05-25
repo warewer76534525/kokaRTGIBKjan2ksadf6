@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class TorrentRequestSpecification implements ISpecification<String> {
 	private Pattern pattern;
 	private Matcher matcher;
-	private static final String TORRENT_PATTERN = "^td\\s(http|https)://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
+	private static final String TORRENT_PATTERN = "^td\\s(http|https)://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?()%&=]*)?";
 	
 	public TorrentRequestSpecification() {
 		pattern = Pattern.compile(TORRENT_PATTERN);

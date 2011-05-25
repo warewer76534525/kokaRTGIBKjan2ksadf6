@@ -10,7 +10,7 @@ import com.cd.message.FileDownloaded;
 import com.cd.message.DownloadFile;
 
 
-public class SimpleDownloadTask implements Runnable {
+public class SimpleDownloadTask {
 	protected final static Log log = LogFactory.getLog(SimpleDownloadTask.class);
 	
 	private IFileDownloader _simpleFileDownloader;
@@ -27,7 +27,7 @@ public class SimpleDownloadTask implements Runnable {
 		_downloadUrl = downloadUrl;
 	}
 
-	public void run() {
+	public void start() {
 		try {
 			log.info("Download begin " + _downloadFile.getFileName());
 			_simpleFileDownloader.download(_downloadFile);
