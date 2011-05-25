@@ -85,7 +85,7 @@ public class TorrentDownloader implements IFileDownloader {
 				break;
 				case DownloadManager.STATE_DOWNLOADING :
 					System.out.println("Downloading....");
-					
+					/*
 					//Start a new daemon thread periodically check 
 					//the progress of the upload and print it out 
 					//to the command line
@@ -117,7 +117,7 @@ public class TorrentDownloader implements IFileDownloader {
 					
 					Thread progressChecker = new Thread(checkAndPrintProgress);
 					progressChecker.setDaemon(true);
-					progressChecker.start();
+					progressChecker.start();*/
 				break;
 				case DownloadManager.STATE_FINISHING :
 					System.out.println("Finishing Download....");
