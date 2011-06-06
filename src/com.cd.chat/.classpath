@@ -29,5 +29,7 @@
 	<classpathentry kind="lib" path="/external-lib/smackx.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/com.cd.message"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/external-lib/quartz-1.8.3.jar"/>
+	<classpathentry kind="lib" path="/external-lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

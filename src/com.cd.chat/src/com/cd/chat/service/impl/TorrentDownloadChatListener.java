@@ -29,7 +29,6 @@ public class TorrentDownloadChatListener implements PacketListener {
 	@Override
 	public void processPacket(Packet p) {
 		Message msg = (Message) p;
-		log.info("incomming message");
 		if (spec.isSatisfiedBy(msg.getBody())) {
 			DownloadFile downloadRequest = new DownloadFile(getFrom(msg.getFrom()), getUrl(msg.getBody()));
 			torrentDownloadTemplate.convertAndSend(downloadRequest);

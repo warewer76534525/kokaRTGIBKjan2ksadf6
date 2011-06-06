@@ -100,4 +100,40 @@
 		<property name="subscriptionDurable" value="true" />
 		<property name="clientId" value="fileRemovedHandler"></property>
 	</bean>
+	
+	<bean name="webCheckerJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.cd.chat.scheduler.WebCheckerJob" />
+
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="webPageChecker" value-ref="webPageChecker" />
+				<entry key="chatManager" value-ref="chatManager" />
+				<entry key="spec" value="Quiz Harian Sony Ericsson 2 Juni 2011" />
+			</map>
+		</property>
+
+	</bean>
+
+	<bean id="simpleTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+ 
+		<property name="jobDetail" ref="webCheckerJobDetail" />
+		<property name="repeatInterval" value="300000" />
+		<property name="startDelay" value="10000" />
+ 
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="webCheckerJobDetail" />
+			</list>
+		</property>
+
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger" />
+			</list>
+		</property>
+	</bean>
 </beans>
